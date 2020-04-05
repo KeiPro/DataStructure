@@ -77,6 +77,5 @@ int main()
 		if ((i+1) % 10 == 0)
 			cout << endl;
 	}
-
 	return 0;
 }
