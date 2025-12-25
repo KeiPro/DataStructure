@@ -2,16 +2,16 @@
 #include <iostream>
 #include <vector>
 
-template<typename Compare>
+template<typename T, typename Compare>
 class kei_priority_queue
 {
 public:
 
-	void push(int num)
+	void push(const T& data)
 	{
-		_container.push_back(num);
+		_container.push_back(data);
 
-		int currIndex = static_cast<int>(_container.size()) - 1;
+		size_t currIndex = _container.size() - 1;
 	
 		while (currIndex != 0)
 		{
@@ -25,19 +25,16 @@ public:
 		}
 	}
 
-
-	int pop()
+	void pop()
 	{
 		if (isEmpty())
 			throw std::out_of_range("Cannot pop from an empty priorityQ");
-
-		int returnValue = _container[0];
 
 		_container[0] = _container.back();
 		_container.pop_back();
 
 		int currIndex = 0;
-		int containerSize = static_cast<int>(_container.size());
+		size_t containerSize = _container.size();
 
 		while (true)
 		{
@@ -57,11 +54,9 @@ public:
 			std::swap(_container[currIndex], _container[bestIndex]);
 			currIndex = bestIndex;
 		}
-
-		return returnValue;
 	}
 
-	int top() const
+	const T& top() const
 	{
 		if (isEmpty())
 			throw std::out_of_range("Cannot get top element from an empty priority queue.");
@@ -76,6 +71,6 @@ public:
 
 private:
 
-	std::vector<int> _container;
+	std::vector<T> _container;
 	Compare _comp;
 };
